@@ -1,6 +1,9 @@
 package com.jceloto7.learning_heritage.view;
 
 import com.jceloto7.learning_heritage.Bootstrap;
+import com.jceloto7.learning_heritage.controller.GetRouterIPController;
+import com.jceloto7.learning_heritage.service.Command;
+import com.jceloto7.learning_heritage.service.GetRouterIPService;
 import com.jceloto7.learning_heritage.util.InputUtil;
 
 import java.util.Scanner;
@@ -9,6 +12,7 @@ public class CommandView {
     public void mainMenu() {
         String switchOption = "1";
         InputUtil inputUtil = Bootstrap.inputUtil;
+        GetRouterIPController getRouterIPController = new GetRouterIPController(Bootstrap.getRouterIPService);
 
         while (!switchOption.equals("9")) {
             System.out.println("""
@@ -23,7 +27,9 @@ public class CommandView {
             switchOption = inputUtil.getInput();
             switch (switchOption) {
                 case "1" -> {
-                    System.out.println("case 1");
+                    String result = getRouterIPController.commandImpl();
+                    System.out.println(result);
+
                 }
 
                 case "2" -> {
@@ -43,15 +49,11 @@ public class CommandView {
                     inputUtil.closeScanner();
                     System.out.println("Bye.");
                 }
+
+                default -> System.out.println("Invalid option. Please try again.");
             }
         }
 
     }
-
-
-        public void displayResult (String result){
-            System.out.println("Resultado:");
-            System.out.println(result);
-        }
-    }
+}
 
