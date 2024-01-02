@@ -1,7 +1,12 @@
+//Arrumar bug do comando do ping
+
 package com.jceloto7.learning_heritage.view;
 
 import com.jceloto7.learning_heritage.Bootstrap;
+import com.jceloto7.learning_heritage.controller.GetOSController;
 import com.jceloto7.learning_heritage.controller.GetRouterIPController;
+import com.jceloto7.learning_heritage.controller.JavaVersionController;
+import com.jceloto7.learning_heritage.controller.PingController;
 import com.jceloto7.learning_heritage.service.Command;
 import com.jceloto7.learning_heritage.service.GetRouterIPService;
 import com.jceloto7.learning_heritage.util.InputUtil;
@@ -13,6 +18,9 @@ public class CommandView {
         String switchOption = "1";
         InputUtil inputUtil = Bootstrap.inputUtil;
         GetRouterIPController getRouterIPController = new GetRouterIPController(Bootstrap.getRouterIPService);
+        PingController pingController = new PingController(Bootstrap.pingService);
+        JavaVersionController javaVersionController = new JavaVersionController(Bootstrap.javaVersionService);
+        GetOSController getOSController = new GetOSController(Bootstrap.getOSService);
 
         while (!switchOption.equals("9")) {
             System.out.println("""
@@ -33,15 +41,18 @@ public class CommandView {
                 }
 
                 case "2" -> {
-                    System.out.println("case 2");
+                    String result = pingController.commandImpl();
+                    System.out.println(result);
                 }
 
                 case "3" -> {
-                    System.out.println("case 3");
+                    String result = javaVersionController.commandImpl();
+                    System.out.println(result);
                 }
 
                 case "4" -> {
-                    System.out.println("case 4");
+                    String result = getOSController.commandImpl();
+                    System.out.println(result);
 
                 }
 
