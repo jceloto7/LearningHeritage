@@ -6,22 +6,25 @@ import java.io.InputStreamReader;
 public class PingService extends Command {
     @Override
     protected String commandImpl() {
-        String ipAddress = "8.8.8.8"; // Endereço IP padrão
-        StringBuilder commandOutput = new StringBuilder();
+        String ipAddress = "8.8.8.8";
+        int linesToPrint = 5;
         try {
-            Process process = Runtime.getRuntime().exec("ping " + ipAddress);
+            Process pingCommand = Runtime.getRuntime().exec("ping " + ipAddress);
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                commandOutput.append(line).append("\n");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(pingCommand.getInputStream()));
+            String pingAnswer;
+            int linesPrinted =0;
+            while ((pingAnswer = reader.readLine()) != null && linesPrinted <linesToPrint) {
+                System.out.println(pingAnswer);
+                linesPrinted++;
             }
-
-            int exitCode = process.waitFor();
-            commandOutput.append("\nComando ping concluído com código de saída: ").append(exitCode);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            return pingAnswer;
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
         }
-        return commandOutput.toString();
+
+        return "";
+
     }
-    }
+
+}
